@@ -18,10 +18,6 @@ class PostsController extends Controller
      */
     public function index()
     {
-        // return Post::where('title', 'This is the Title')->get();
-        // $postsData = Post::all();
-        // return DB::select("SELECT * FROM posts");
-        // $postsData = Post::orderBy('created_at', 'desc')->take(10)->get();
         $postsData = Post::orderBy('created_at', 'desc')->paginate(4);
         return view('posts.index')->with('postsData', $postsData);
     }
@@ -50,10 +46,10 @@ class PostsController extends Controller
             'cover_image' => 'image|nullable|max:1999'
         ]);
 
-        if($request->hasFile('cover_image')) 
+        if($request->hasFile('cover_image'))
         {
             // Get file name with extension
-            $fileNameWithExt =  $request->file('cover_image')->getClientOriginalName(); 
+            $fileNameWithExt =  $request->file('cover_image')->getClientOriginalName();
             // Get just file Name
             $fileName = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
             // Get just extension
@@ -63,7 +59,7 @@ class PostsController extends Controller
             // Uplload Image
             $path = $request->file('cover_image')->storeAs('public/Cover-image', $fileNameToStore);
         }
-        else 
+        else
         {
             $fileNameToStore = "no_Image.jpg";
 
@@ -135,12 +131,12 @@ class PostsController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
-        if(auth()->user()->id != $postData->user_id) {
+        if(auth()->user()->id != $post->user_id) {
             return redirect('/posts')->with('error', 'Unauthorized Access');
         }
+
         $recoveryPost = $post;
         $post->delete($id);
         return redirect('/posts')->with('success', 'Post Deleted Successfully', $recoveryPost);
     }
 }
- 

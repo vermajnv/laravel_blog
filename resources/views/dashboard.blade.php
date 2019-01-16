@@ -28,9 +28,9 @@
                                 <td></td>
                                 <td><a href="{{url('/posts/'.$post->id.'/edit')}}" class="btn btn-primary">Edit Post</a>
                                 {{Form::open(['action' => ['PostsController@destroy', $post->id], 'method' => 'POST', 'class' => 'list-inline-item'])}}
-                                        {{Form::hidden('_method', 'DELETE')}}
-                                        {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
-                                        {{Form::close()}}
+                                {{Form::hidden('_method', 'DELETE')}}
+                                {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+                                {{Form::close()}}
                                 </td>
                             </tr>
                         @endforeach

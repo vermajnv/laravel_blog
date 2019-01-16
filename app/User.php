@@ -43,12 +43,15 @@ class User extends Model implements AuthenticatableContract,
     public static function boot()
     {
         parent::boot();
-
         User::observe(new UserActionsObserver);
     }
 
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    function post() {
+      return $this->hasMany('App\Post');
     }
 }
